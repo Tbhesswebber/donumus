@@ -18,11 +18,16 @@
   },
   "license": "ISC",
   "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^3.3.1",
     "@clerk/tanstack-start": "^0.8.8",
+    "@emotion/react": "^11.14.0",
     "@tanstack/react-router": "^1.95.6",
     "@tanstack/start": "^1.95.6",
+    "next-themes": "^0.4.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
     "vinxi": "^0.5.1"
   },
   "devDependencies": {

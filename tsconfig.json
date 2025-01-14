@@ -7,7 +7,8 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "paths": {
-      "@lib/*": ["./app/lib/*"]
+      "@lib/*": ["./app/lib/*"],
+      "@components/*": ["./app/components/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

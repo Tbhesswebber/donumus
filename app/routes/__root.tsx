@@ -1,4 +1,5 @@
 import { ClerkProvider } from "@clerk/tanstack-start";
+import { Provider } from "@components/ui/provider";
 import {
   createRootRoute,
   Outlet,
@@ -25,7 +26,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <Meta />
         </head>
         <body>
-          {children}
+          <Provider>{children}</Provider>
           <ScrollRestoration />
           <Scripts />
         </body>

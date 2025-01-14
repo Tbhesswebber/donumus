@@ -12,7 +12,7 @@ import {
 } from "typescript-eslint";
 
 export default [
-  { ignores: [] },
+  { ignores: ["**/*.gen.ts"] },
   eslint.configs.recommended,
   ...tsEslintConfigs.recommendedTypeChecked,
   ...tsEslintConfigs.strictTypeChecked,
