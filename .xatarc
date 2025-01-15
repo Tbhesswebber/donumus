@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Tanner-B-Hess-Webber-s-workspace-2s03bv.us-east-1.xata.sh/db/wishywish",
+  "codegen": {
+    "output": "app/db/xata.gen.ts"
+  }
+}
