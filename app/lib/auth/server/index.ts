@@ -17,4 +17,9 @@ const assertAuth = createServerFn({ method: "GET" }).handler(async () => {
   return { userId };
 });
 
+// const authMiddleware = createMiddleware().server(({ context, next }) => {
+//   console.log(context.user); // <-- This will not be typed!
+//   // ...
+// });
+
 export { assertAuth };

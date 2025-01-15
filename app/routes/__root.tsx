@@ -1,5 +1,6 @@
-import { ClerkProvider } from "@clerk/tanstack-start";
+import { Header } from "@components/layout/header";
 import { Provider } from "@components/ui/provider";
+import { AuthProvider } from "@lib/auth/components/provider";
 import {
   createRootRoute,
   Outlet,
@@ -16,21 +17,37 @@ export const Route = createRootRoute({
       </RootDocument>
     );
   },
+  // @ts-expect-error -- @see https://github.com/TanStack/router/issues/1992#issuecomment-2397896356
+  scripts: () =>
+    import.meta.env.DEV
+      ? [
+          {
+            children: `import RefreshRuntime from "/_build/@react-refresh";
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type`,
+            type: "module",
+          },
+        ]
+      : [],
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
-      <html>
-        <head>
-          <Meta />
-        </head>
-        <body>
-          <Provider>{children}</Provider>
-          <ScrollRestoration />
-          <Scripts />
-        </body>
-      </html>
-    </ClerkProvider>
+    <html>
+      <head>
+        <Meta />
+      </head>
+      <body>
+        <Provider>
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
+        </Provider>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
   );
 }

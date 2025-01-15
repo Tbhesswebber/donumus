@@ -1,5 +1,6 @@
 import eslint from "@eslint/js";
 import pluginRouter from "@tanstack/eslint-plugin-router";
+import drizzlePlugin from "eslint-plugin-drizzle";
 import eslintComments from "eslint-plugin-eslint-comments";
 import eslintPluginImportX from "eslint-plugin-import-x";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -30,9 +31,15 @@ export default [
     },
     plugins: {
       "@typescript-eslint": tsEslintPlugin,
+      drizzle: drizzlePlugin,
       "eslint-comments": eslintComments,
     },
     rules: {
+      ...drizzlePlugin.configs.recommended.rules,
+      "@typescript-eslint/no-empty-object-type": [
+        "error",
+        { allowWithName: "Props$" },
+      ],
       "@typescript-eslint/only-throw-error": [
         "error",
         {

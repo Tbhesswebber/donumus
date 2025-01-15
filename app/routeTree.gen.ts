@@ -12,7 +12,10 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as FamiliesIndexImport } from './routes/families/index'
 import { Route as SignInSplatImport } from './routes/sign-in/$'
+import { Route as FamiliesNewImport } from './routes/families/new'
+import { Route as FamiliesIdImport } from './routes/families/$id'
 
 // Create/Update Routes
 
@@ -22,9 +25,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const FamiliesIndexRoute = FamiliesIndexImport.update({
+  id: '/families/',
+  path: '/families/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const SignInSplatRoute = SignInSplatImport.update({
   id: '/sign-in/$',
   path: '/sign-in/$',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FamiliesNewRoute = FamiliesNewImport.update({
+  id: '/families/new',
+  path: '/families/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FamiliesIdRoute = FamiliesIdImport.update({
+  id: '/families/$id',
+  path: '/families/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +60,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/families/$id': {
+      id: '/families/$id'
+      path: '/families/$id'
+      fullPath: '/families/$id'
+      preLoaderRoute: typeof FamiliesIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/families/new': {
+      id: '/families/new'
+      path: '/families/new'
+      fullPath: '/families/new'
+      preLoaderRoute: typeof FamiliesNewImport
+      parentRoute: typeof rootRoute
+    }
     '/sign-in/$': {
       id: '/sign-in/$'
       path: '/sign-in/$'
       fullPath: '/sign-in/$'
       preLoaderRoute: typeof SignInSplatImport
+      parentRoute: typeof rootRoute
+    }
+    '/families/': {
+      id: '/families/'
+      path: '/families'
+      fullPath: '/families'
+      preLoaderRoute: typeof FamiliesIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +95,63 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/families/$id': typeof FamiliesIdRoute
+  '/families/new': typeof FamiliesNewRoute
   '/sign-in/$': typeof SignInSplatRoute
+  '/families': typeof FamiliesIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/families/$id': typeof FamiliesIdRoute
+  '/families/new': typeof FamiliesNewRoute
   '/sign-in/$': typeof SignInSplatRoute
+  '/families': typeof FamiliesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/families/$id': typeof FamiliesIdRoute
+  '/families/new': typeof FamiliesNewRoute
   '/sign-in/$': typeof SignInSplatRoute
+  '/families/': typeof FamiliesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in/$'
+  fullPaths:
+    | '/'
+    | '/families/$id'
+    | '/families/new'
+    | '/sign-in/$'
+    | '/families'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in/$'
-  id: '__root__' | '/' | '/sign-in/$'
+  to: '/' | '/families/$id' | '/families/new' | '/sign-in/$' | '/families'
+  id:
+    | '__root__'
+    | '/'
+    | '/families/$id'
+    | '/families/new'
+    | '/sign-in/$'
+    | '/families/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FamiliesIdRoute: typeof FamiliesIdRoute
+  FamiliesNewRoute: typeof FamiliesNewRoute
   SignInSplatRoute: typeof SignInSplatRoute
+  FamiliesIndexRoute: typeof FamiliesIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FamiliesIdRoute: FamiliesIdRoute,
+  FamiliesNewRoute: FamiliesNewRoute,
   SignInSplatRoute: SignInSplatRoute,
+  FamiliesIndexRoute: FamiliesIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +165,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/sign-in/$"
+        "/families/$id",
+        "/families/new",
+        "/sign-in/$",
+        "/families/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/families/$id": {
+      "filePath": "families/$id.tsx"
+    },
+    "/families/new": {
+      "filePath": "families/new.tsx"
+    },
     "/sign-in/$": {
       "filePath": "sign-in/$.tsx"
+    },
+    "/families/": {
+      "filePath": "families/index.tsx"
     }
   }
 }
