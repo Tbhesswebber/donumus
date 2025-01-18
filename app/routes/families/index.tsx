@@ -1,3 +1,4 @@
+import { List } from "@chakra-ui/react";
 import { BasePage } from "@components/layout/basePage";
 import { PageHeader } from "@components/layout/pageHeader";
 import {
@@ -16,8 +17,8 @@ import { assertAuth } from "@lib/auth/server/actions";
 import { getFamiliesForUser } from "@services/family";
 import { getUserByAuthId } from "@services/user";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
-// import { FiPlus } from "react-icons/fi";
+import { useMemo, useState } from "react";
+import { FiPlus } from "react-icons/fi";
 
 export const Route = createFileRoute("/families/")({
   beforeLoad: () => assertAuth(),
@@ -33,31 +34,45 @@ export const Route = createFileRoute("/families/")({
   },
 });
 
-// const addFamilyAction = {
-//   icon: FiPlus,
-//   label: "Add Family",
-//   modalName: "add-family",
-// };
-
 function RouteComponent() {
   const router = useRouter();
   const [shouldShowModal, setShouldShowModal] = useState(false);
   const { families } = Route.useLoaderData();
   const isEmpty = families.length === 0;
 
+  const addFamilyAction = useMemo(
+    () => ({
+      handleClick: () => {
+        setShouldShowModal(true);
+      },
+      icon: FiPlus,
+      label: "Add Family",
+    }),
+    [],
+  );
+
   return (
-    <BasePage subheader={<PageHeader title="Families"></PageHeader>}>
+    <BasePage
+      subheader={
+        <PageHeader action={addFamilyAction} title="Families"></PageHeader>
+      }
+    >
       {isEmpty && <NoFamilies />}
-      <ul>
+      <List.Root>
         {families.map(({ id, name }) => (
-          <li>
+          <List.Item key={id}>
             <Link params={{ id }} to="/families/$id">
-              {name}
+              {name} Family
             </Link>
-          </li>
+          </List.Item>
         ))}
-      </ul>
-      <DialogRoot open={shouldShowModal}>
+      </List.Root>
+      <DialogRoot
+        onOpenChange={(e) => {
+          setShouldShowModal(e.open);
+        }}
+        open={shouldShowModal}
+      >
         <DialogBackdrop />
         <DialogContent>
           <DialogCloseTrigger />
@@ -69,7 +84,7 @@ function RouteComponent() {
               }}
               handleSubmit={() => {
                 setShouldShowModal(false);
-                router.load({ sync: true }).catch(console.log);
+                router.load({ sync: false }).catch(console.log);
               }}
             />
           </DialogBody>

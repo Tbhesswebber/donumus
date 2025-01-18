@@ -14,9 +14,9 @@ import {
 
 interface PageHeaderProps {
   action?: {
+    handleClick: () => void;
     icon: IconType;
     label: string;
-    modalName: string;
   };
   crumbs?: BreadcrumbLinkProps[];
   title: string;
@@ -53,6 +53,8 @@ export function PageHeader({ action, crumbs, title }: PageHeaderProps) {
           <Button
             onClick={() => {
               console.log("hi");
+
+              action.handleClick();
             }}
             type="button"
             variant={"subtle"}
