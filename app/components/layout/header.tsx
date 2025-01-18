@@ -5,11 +5,13 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignOutButton,
   UserButton,
 } from "@lib/auth/components";
+import { useRouterState } from "@tanstack/react-router";
 
 export function Header() {
+  const route = useRouterState();
+
   return (
     <Bleed
       backgroundColor={"AppWorkspace"}
@@ -39,15 +41,18 @@ export function Header() {
         <SignedIn>
           <Flex>
             <UserButton />
-            <SignOutButton redirectUrl="/">
-              <Button variant={"ghost"}>Sign Out</Button>
-            </SignOutButton>
           </Flex>
         </SignedIn>
         <SignedOut>
-          <SignInButton>
-            <Button variant={"ghost"}>Sign In</Button>
-          </SignInButton>
+          {route.location.pathname === "/sign-in" ? (
+            <Button disabled variant={"ghost"}>
+              Sign In
+            </Button>
+          ) : (
+            <SignInButton mode="modal">
+              <Button variant={"ghost"}>Sign In</Button>
+            </SignInButton>
+          )}
         </SignedOut>
       </Flex>
     </Bleed>

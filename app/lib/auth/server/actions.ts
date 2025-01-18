@@ -16,3 +16,17 @@ export const assertAuth = createServerFn({ method: "GET" }).handler(
     return { userId };
   },
 );
+
+export const assertNoAuth = createServerFn({ method: "GET" }).handler(
+  async () => {
+    const { userId } = await getAuth(getWebRequest());
+
+    if (userId) {
+      throw redirect({
+        to: "/families",
+      });
+    }
+
+    return { userId };
+  },
+);
