@@ -10,6 +10,9 @@ type Plugin = Exclude<
 >[number];
 
 export default defineConfig({
+  server: {
+    preset: "netlify",
+  },
   vite: {
     plugins: [viteTsConfigPaths() as Plugin],
   },
