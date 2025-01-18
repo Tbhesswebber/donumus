@@ -2,7 +2,7 @@ import { json } from "@tanstack/start";
 import { createAPIFileRoute } from "@tanstack/start/api";
 
 export const APIRoute = createAPIFileRoute("/api/families")({
-  GET: ({ params, request }) => {
+  GET: () => {
     return json({ message: 'Hello "/api/families"!' });
   },
   POST: () => {

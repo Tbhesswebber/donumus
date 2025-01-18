@@ -8,7 +8,10 @@
     "strictNullChecks": true,
     "paths": {
       "@lib/*": ["./app/lib/*"],
-      "@components/*": ["./app/components/*"]
+      "@components/*": ["./app/components/*"],
+      "@features/*": ["./app/features/*"],
+      "@services/*": ["./app/services/*"],
+      "@db/*": ["./app/db/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

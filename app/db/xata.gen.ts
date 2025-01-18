@@ -18,6 +18,8 @@ const DatabaseClient = buildClient();
 const defaultOptions = {
   databaseURL:
     "https://Tanner-B-Hess-Webber-s-workspace-2s03bv.us-east-1.xata.sh/db/wishywish",
+  apiKey: process.env.XATA_API_KEY,
+  branch: process.env.XATA_BRANCH,
 };
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {

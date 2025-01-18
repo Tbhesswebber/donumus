@@ -1,10 +1,9 @@
 import { getAuth } from "@clerk/tanstack-start/server";
-import { json } from "@tanstack/start";
 import { createAPIFileRoute } from "@tanstack/start/api";
 import { z } from "zod";
 
 import { AuthenticationService } from "../../../services/authenticationService";
-import { UserService } from "../../../services/user";
+import { UserService } from "../../../services/user/service";
 
 export const APIRoute = createAPIFileRoute("/api/users/invite")({
   POST: async ({ request }) => {
@@ -40,7 +39,7 @@ export const APIRoute = createAPIFileRoute("/api/users/invite")({
       userId: invitedUserId,
     });
 
-    return json({ message: 'Hello "/api/users/invite"!' });
+    return new Response(undefined, { status: 200 });
   },
 });
 

@@ -1,5 +1,3 @@
-"use client";
-
 import type { IconButtonProps } from "@chakra-ui/react";
 import type { ThemeProviderProps } from "next-themes";
 

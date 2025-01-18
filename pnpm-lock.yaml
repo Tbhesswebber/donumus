@@ -15,11 +15,11 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(@emotion/react@11.14.0(@types/react@19.0.6)(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@clerk/backend':
-        specifier: ^1.22.0
-        version: 1.22.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: ^1.23.3
+        version: 1.23.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@clerk/tanstack-start':
-        specifier: ^0.8.8
-        version: 0.8.8(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/start@1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 0.8.12
+        version: 0.8.12(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/start@1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@clerk/themes':
         specifier: ^2.2.5
         version: 2.2.5
@@ -27,14 +27,17 @@ importers:
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.0.6)(react@19.0.0)
       '@tanstack/react-router':
-        specifier: ^1.95.6
+        specifier: 1.95.6
         version: 1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/start':
-        specifier: ^1.95.6
+        specifier: 1.95.6
         version: 1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0))
       '@xata.io/client':
         specifier: 0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930
         version: 0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3)
+      builder-pattern:
+        specifier: ^2.2.0
+        version: 2.2.0
       drizzle-orm:
         specifier: ^0.38.3
         version: 0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)
@@ -57,7 +60,7 @@ importers:
         specifier: ^5.4.0
         version: 5.4.0(react@19.0.0)
       vinxi:
-        specifier: ^0.5.1
+        specifier: 0.5.1
         version: 0.5.1(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)
       zod:
         specifier: ^3.24.1
@@ -251,19 +254,19 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@clerk/backend@1.22.0':
-    resolution: {integrity: sha512-nu6dAigcsqMLt2K+seBKb+goWzsKgxylFA9O9vcXPeNKk+rsrFPQVIv/X1Kt5O/IgZNbmRFch4MSF9XU6rqIRw==}
+  '@clerk/backend@1.23.3':
+    resolution: {integrity: sha512-Fknt8/Xgzrs9qkLk1bw/fZEtJFn66BixGWAGGzZMaq6U+1Ma853DJCBwYufOMpNkU0HYEIJGCnO6nLt+PVzwfA==}
     engines: {node: '>=18.17.0'}
 
-  '@clerk/clerk-react@5.21.2':
-    resolution: {integrity: sha512-3dscBj4uyIjlq+jOykQJ2fmjqKfhbjTrPeHxCmzmHLCLCMLOq4+rbkzKJKes35DihGQeeraBFxKQkBYH1PW/SQ==}
+  '@clerk/clerk-react@5.22.2':
+    resolution: {integrity: sha512-RcfK5KEZZYMRpXlu94etWCW9jiw+FzjHHq7r1apL4DF9uq3g+YxnM7jeFap3THnulb7un+Ninc0tZkmDLqrAlg==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
       react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-0
 
-  '@clerk/shared@2.20.6':
-    resolution: {integrity: sha512-DnxXbPPUNQQMOlAQFEn0iAiwPtjO4yKVabSgs+qn86VsNWWHnG//uHJzB6nmDk8n5RYGe/vMum73/Lz/Pg1SgQ==}
+  '@clerk/shared@2.20.10':
+    resolution: {integrity: sha512-ARBymzuHvDet9fE/X2DCXTbknSfsvjx/bV20yrCRnwE8CdVszOXO2mS0/B8HwDdVr48p6WZzzYyWIseyG/3NhA==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
@@ -274,8 +277,8 @@ packages:
       react-dom:
         optional: true
 
-  '@clerk/tanstack-start@0.8.8':
-    resolution: {integrity: sha512-Z5f8OdqqXXHGtmjbGxMW70c+tg86RCK4RGokct6x05GfXzrT3vMOsZJjOphszTPEMOtFyEpJeAekklzvxNwL0w==}
+  '@clerk/tanstack-start@0.8.12':
+    resolution: {integrity: sha512-9GXUvwiNqg6PQbJsmLLqR8ppkH1j7EtLZU4VvBoUsl2E4Dt/mScK+dDPyeFkLm+IjpgCp4IQVkTAHSR9i2LutA==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       '@tanstack/react-router': '>=1.81.9'
@@ -289,6 +292,10 @@ packages:
 
   '@clerk/types@4.40.2':
     resolution: {integrity: sha512-Jkt8YiqtFSRvCsN+8/MR2V0Cl83xtuqZVuV6ygQ6VJeSbmmFP0q5CSowlJ8mon2bELrlUnWH011dhAjELmvXqg==}
+    engines: {node: '>=18.17.0'}
+
+  '@clerk/types@4.41.1':
+    resolution: {integrity: sha512-Vz1jkHPUzJCVqR/Vmnjpab6hTsfV/Gt2y5W88Pv22xCyeFgmXwxqwu9dLyxMio32ekajRKI9S9hX5LxO0Vsx/Q==}
     engines: {node: '>=18.17.0'}
 
   '@cloudflare/kv-asset-handler@0.3.4':
@@ -2248,6 +2255,9 @@ packages:
 
   buffer@6.0.3:
     resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
+
+  builder-pattern@2.2.0:
+    resolution: {integrity: sha512-cES3qdeBzA4QyJi7rV/l/kAhIFX6AKo3vK66ZPXLNpjcQWCS8sjLKscly8imlfW2YPTo/hquMRMnaWpZ80Kj+g==}
 
   c12@2.0.1:
     resolution: {integrity: sha512-Z4JgsKXHG37C6PYUtIxCfLJZvo6FyhHJoClwwb9ftUkLpPSkuYqn6Tr+vnaN8hymm0kIbcg6Ey3kv/Q71k5w/A==}
@@ -4665,10 +4675,10 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@clerk/backend@1.22.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@clerk/backend@1.23.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@clerk/shared': 2.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@clerk/types': 4.40.2
+      '@clerk/shared': 2.20.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@clerk/types': 4.41.1
       cookie: 1.0.2
       snakecase-keys: 8.0.1
       tslib: 2.4.1
@@ -4676,17 +4686,17 @@ snapshots:
       - react
       - react-dom
 
-  '@clerk/clerk-react@5.21.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@clerk/clerk-react@5.22.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@clerk/shared': 2.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@clerk/types': 4.40.2
+      '@clerk/shared': 2.20.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@clerk/types': 4.41.1
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       tslib: 2.4.1
 
-  '@clerk/shared@2.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@clerk/shared@2.20.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@clerk/types': 4.40.2
+      '@clerk/types': 4.41.1
       dequal: 2.0.3
       glob-to-regexp: 0.4.1
       js-cookie: 3.0.5
@@ -4696,12 +4706,12 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@clerk/tanstack-start@0.8.8(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/start@1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@clerk/tanstack-start@0.8.12(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/start@1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0)))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@clerk/backend': 1.22.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@clerk/clerk-react': 5.21.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@clerk/shared': 2.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@clerk/types': 4.40.2
+      '@clerk/backend': 1.23.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@clerk/clerk-react': 5.22.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@clerk/shared': 2.20.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@clerk/types': 4.41.1
       '@tanstack/react-router': 1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/start': 1.95.6(@types/node@22.10.6)(db0@0.2.1(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0)))(drizzle-orm@0.38.3(@types/pg@8.11.10)(@types/react@19.0.6)(@xata.io/client@0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930(typescript@5.7.3))(pg@8.13.1)(react@19.0.0))(ioredis@5.4.2)(jiti@2.4.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(terser@5.37.0)(tsx@4.19.2)(typescript@5.7.3)(vite@5.4.11(@types/node@22.10.6)(terser@5.37.0))
       react: 19.0.0
@@ -4714,6 +4724,10 @@ snapshots:
       tslib: 2.4.1
 
   '@clerk/types@4.40.2':
+    dependencies:
+      csstype: 3.1.1
+
+  '@clerk/types@4.41.1':
     dependencies:
       csstype: 3.1.1
 
@@ -6706,6 +6720,8 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
+
+  builder-pattern@2.2.0: {}
 
   c12@2.0.1(magicast@0.3.5):
     dependencies:

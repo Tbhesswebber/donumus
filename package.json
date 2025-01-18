@@ -22,13 +22,14 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "^3.3.1",
-    "@clerk/backend": "^1.22.0",
-    "@clerk/tanstack-start": "^0.8.8",
+    "@clerk/backend": "^1.23.3",
+    "@clerk/tanstack-start": "0.8.12",
     "@clerk/themes": "^2.2.5",
     "@emotion/react": "^11.14.0",
-    "@tanstack/react-router": "^1.95.6",
-    "@tanstack/start": "^1.95.6",
+    "@tanstack/react-router": "1.95.6",
+    "@tanstack/start": "1.95.6",
     "@xata.io/client": "0.0.0-next.va121e4207b94bfe0a3c025fc00b247b923880930",
+    "builder-pattern": "^2.2.0",
     "drizzle-orm": "^0.38.3",
     "drizzle-zod": "^0.6.1",
     "next-themes": "^0.4.4",
@@ -36,7 +37,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "vinxi": "^0.5.1",
+    "vinxi": "0.5.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {

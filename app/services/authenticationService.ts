@@ -1,12 +1,12 @@
 import { ClerkClient, createClerkClient } from "@clerk/backend";
-
-import { publicMetadata } from "../lib/auth/common/types";
+import { privateMetadata } from "@lib/auth/common/types";
 
 export class AuthenticationService {
   client: ClerkClient;
 
   constructor(
     client: ClerkClient = createClerkClient({
+      publishableKey: process.env.VITE_CLERK_PUBLISHABLE_KEY,
       secretKey: process.env.CLERK_SECRET_KEY,
     }),
   ) {
@@ -25,7 +25,10 @@ export class AuthenticationService {
     const result = await this.client.invitations.createInvitation({
       emailAddress,
       notify,
-      publicMetadata: publicMetadata.parse({ userId }),
+    });
+
+    await this.client.users.updateUserMetadata(result.id, {
+      privateMetadata: privateMetadata.parse({ internalId: userId }),
     });
 
     return { authId: result.id };

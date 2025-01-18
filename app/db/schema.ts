@@ -1,8 +1,36 @@
-import { pgTable, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
+import { relations } from "drizzle-orm";
+import {
+  pgEnum,
+  pgTable,
+  timestamp,
+  uniqueIndex,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
+
+/*************************************
+ *
+ *     ENUMS
+ *
+ *************************************/
+
+export const familyRoleEnum = pgEnum("family_role", ["admin", "member"]);
+
+export const persistenceFamilyRoleEnum = createSelectSchema(familyRoleEnum);
+export type PersistenceFamilyRoleEnum = z.infer<
+  typeof persistenceFamilyRoleEnum
+>;
+
+/*************************************
+ *
+ *     USERS
+ *
+ *************************************/
 
 export const userTable = pgTable("users", {
-  auth_id: uuid().notNull().unique(),
+  auth_id: varchar({ length: 255 }).notNull().unique(),
   created_at: timestamp().notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
   id: uuid().primaryKey().notNull().unique(),
@@ -10,4 +38,69 @@ export const userTable = pgTable("users", {
   updated_at: timestamp().notNull(),
 });
 
+export const userRelations = relations(userTable, ({ many }) => ({
+  families: many(usersToFamiliesTable),
+}));
+
 export const persistenceUserInsert = createInsertSchema(userTable);
+export const persistenceUserSelect = createSelectSchema(userTable);
+
+/*************************************
+ *
+ *     FAMILIES
+ *
+ *************************************/
+
+export const familyTable = pgTable("families", {
+  created_at: timestamp().notNull(),
+  id: uuid().primaryKey().notNull(),
+  name: varchar({ length: 255 }).notNull(),
+  updated_at: timestamp().notNull(),
+});
+
+export const familyRelations = relations(familyTable, ({ many }) => ({
+  members: many(usersToFamiliesTable),
+}));
+
+export const persistenceFamilyInsert = createInsertSchema(familyTable);
+export const persistenceFamilySelect = createSelectSchema(familyTable);
+
+/*************************************
+ *
+ *     USERS_TO_FAMILIES
+ *
+ *************************************/
+
+export const usersToFamiliesTable = pgTable(
+  "users_to_families",
+  {
+    created_at: timestamp().notNull(),
+    family_id: uuid()
+      .notNull()
+      .references(() => familyTable.id),
+    id: uuid().primaryKey().notNull(),
+    role: familyRoleEnum().notNull(),
+    updated_at: timestamp().notNull(),
+    user_id: uuid().references(() => userTable.id),
+  },
+  (t) => [uniqueIndex("family_to_user_index").on(t.family_id, t.user_id)],
+);
+
+export const usersToFamiliesRelations = relations(
+  usersToFamiliesTable,
+  ({ one }) => ({
+    family: one(familyTable, {
+      fields: [usersToFamiliesTable.family_id],
+      references: [familyTable.id],
+    }),
+    user: one(userTable, {
+      fields: [usersToFamiliesTable.user_id],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const persistenceUserToFamilyInsert =
+  createInsertSchema(usersToFamiliesTable);
+export const persistenceUserToFamilySelect =
+  createSelectSchema(usersToFamiliesTable);

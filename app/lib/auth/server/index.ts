@@ -1,25 +1,12 @@
-import { getAuth } from "@clerk/tanstack-start/server";
-import { redirect } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/start";
-import { getWebRequest } from "vinxi/http";
+import { AuthObject } from "@clerk/backend";
 
-const assertAuth = createServerFn({ method: "GET" }).handler(async () => {
-  const { userId } = await getAuth(getWebRequest());
-
-  if (!userId) {
-    // This will error because you're redirecting to a path that doesn't exist yet
-    // You can create a sign-in route to handle this
-    throw redirect({
-      to: "/sign-in/$",
-    });
+export function assertUser(
+  user: unknown,
+): asserts user is Exclude<AuthObject, { userId: null }> {
+  const castUser = user as Exclude<AuthObject, { userId: null }>;
+  if (!castUser.userId) {
+    const err = new Error("User is not a valid user");
+    err.name = "AuthenticationError";
+    throw err;
   }
-
-  return { userId };
-});
-
-// const authMiddleware = createMiddleware().server(({ context, next }) => {
-//   console.log(context.user); // <-- This will not be typed!
-//   // ...
-// });
-
-export { assertAuth };
+}
