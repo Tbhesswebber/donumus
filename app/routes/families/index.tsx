@@ -8,6 +8,7 @@ import {
   DialogHeader,
   DialogRoot,
 } from "@components/ui/dialog";
+import { Link } from "@components/ui/link";
 import { NoFamilies } from "@features/families/emptyState";
 import { FamilyForm } from "@features/families/familyForm";
 import { assertUser } from "@lib/auth/server";
@@ -48,8 +49,12 @@ function RouteComponent() {
     <BasePage subheader={<PageHeader title="Families"></PageHeader>}>
       {isEmpty && <NoFamilies />}
       <ul>
-        {families.map(({ name }) => (
-          <li>{name}</li>
+        {families.map(({ id, name }) => (
+          <li>
+            <Link params={{ id }} to="/families/$id">
+              {name}
+            </Link>
+          </li>
         ))}
       </ul>
       <DialogRoot open={shouldShowModal}>

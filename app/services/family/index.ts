@@ -1,11 +1,13 @@
 import { db } from "@db/index";
 import { familyTable, usersToFamiliesTable } from "@db/schema";
 import { authMiddleware } from "@lib/auth/server/middleware";
+import { uuid } from "@services/common/types";
 import { createServerFn } from "@tanstack/start";
 import { StrictBuilder } from "builder-pattern";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
+import { FamilyService } from "./service";
 import { FamilyWithMembership, familyWithMembership } from "./types";
 
 export const getFamiliesForUser = createServerFn({ method: "GET" })
@@ -35,4 +37,12 @@ export const getFamiliesForUser = createServerFn({ method: "GET" })
         (f: unknown): f is FamilyWithMembership =>
           familyWithMembership.safeParse(f).success,
       );
+  });
+
+export const getFamilyWithMembers = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
+  .validator((familyId: string) => uuid.parse(familyId))
+  .handler(({ data: familyId }) => {
+    const familyService = new FamilyService();
+    return familyService.getFamilyWithMembers(familyId);
   });
