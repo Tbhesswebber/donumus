@@ -52,6 +52,10 @@ export default [
           ],
         },
       ],
+      "@typescript-eslint/restrict-template-expressions": [
+        "error",
+        { allowBoolean: true, allowNumber: true },
+      ],
       "eslint-comments/disable-enable-pair": "error",
       "eslint-comments/no-unlimited-disable": "error",
       "eslint-comments/no-unused-disable": "error",

@@ -8,6 +8,9 @@ import {
   UserButton,
 } from "@lib/auth/components";
 import { useRouterState } from "@tanstack/react-router";
+import { useLayoutEffect, useState } from "react";
+
+const headerId = "global-nav";
 
 export function Header() {
   const route = useRouterState();
@@ -15,6 +18,7 @@ export function Header() {
   return (
     <Bleed
       backgroundColor={"AppWorkspace"}
+      id={headerId}
       position={"sticky"}
       top={0}
       zIndex={50}
@@ -35,6 +39,9 @@ export function Header() {
           <SignedIn>
             <Flex alignItems={"end"} as="nav" gap={"4"}>
               <Link to="/families">My Families</Link>
+            </Flex>
+            <Flex alignItems={"end"} as="nav" gap={"4"}>
+              <Link to="/me/list">My List</Link>
             </Flex>
           </SignedIn>
         </Flex>
@@ -57,4 +64,17 @@ export function Header() {
       </Flex>
     </Bleed>
   );
+}
+
+export function useHeaderHeight() {
+  const [headerSize, setHeaderSize] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    const $header = document.getElementById(headerId);
+    if ($header) {
+      setHeaderSize($header.offsetHeight);
+    }
+  }, []);
+
+  return headerSize;
 }
