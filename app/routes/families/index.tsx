@@ -1,14 +1,7 @@
 import { List } from "@chakra-ui/react";
 import { BasePage } from "@components/layout/basePage";
 import { PageHeader } from "@components/layout/pageHeader";
-import {
-  DialogBackdrop,
-  DialogBody,
-  DialogCloseTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogRoot,
-} from "@components/ui/dialog";
+import { ActionFormModal } from "@components/layout/pageHeader/actionModal";
 import { Link } from "@components/ui/link";
 import { NoFamilies } from "@features/families/emptyState";
 import { FamilyForm } from "@features/families/familyForm";
@@ -17,7 +10,6 @@ import { assertAuth } from "@lib/auth/server/actions";
 import { getFamiliesForUser } from "@services/family";
 import { getUserByAuthId } from "@services/user";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 export const Route = createFileRoute("/families/")({
@@ -34,27 +26,39 @@ export const Route = createFileRoute("/families/")({
   },
 });
 
+const familyFormName = "family-form";
+
 function RouteComponent() {
   const router = useRouter();
-  const [shouldShowModal, setShouldShowModal] = useState(false);
   const { families } = Route.useLoaderData();
   const isEmpty = families.length === 0;
-
-  const addFamilyAction = useMemo(
-    () => ({
-      handleClick: () => {
-        setShouldShowModal(true);
-      },
-      icon: FiPlus,
-      label: "Add Family",
-    }),
-    [],
-  );
 
   return (
     <BasePage
       subheader={
-        <PageHeader action={addFamilyAction} title="Families"></PageHeader>
+        // <PageHeader action={addFamilyAction} title="Families"></PageHeader>
+        <PageHeader
+          action={
+            <ActionFormModal
+              formName={familyFormName}
+              icon={FiPlus}
+              label="Add Family"
+              submitLabel="Create"
+              title="Create a family"
+            >
+              <FamilyForm
+                formName={familyFormName}
+                handleCancel={() => {
+                  console.log("cancel");
+                }}
+                handleSubmit={() => {
+                  router.load({ sync: false }).catch(console.log);
+                }}
+              />
+            </ActionFormModal>
+          }
+          title="Families"
+        ></PageHeader>
       }
     >
       {isEmpty && <NoFamilies />}
@@ -67,29 +71,6 @@ function RouteComponent() {
           </List.Item>
         ))}
       </List.Root>
-      <DialogRoot
-        onOpenChange={(e) => {
-          setShouldShowModal(e.open);
-        }}
-        open={shouldShowModal}
-      >
-        <DialogBackdrop />
-        <DialogContent>
-          <DialogCloseTrigger />
-          <DialogHeader>Create a family</DialogHeader>
-          <DialogBody>
-            <FamilyForm
-              handleCancel={() => {
-                setShouldShowModal(false);
-              }}
-              handleSubmit={() => {
-                setShouldShowModal(false);
-                router.load({ sync: false }).catch(console.log);
-              }}
-            />
-          </DialogBody>
-        </DialogContent>
-      </DialogRoot>
     </BasePage>
   );
 }
