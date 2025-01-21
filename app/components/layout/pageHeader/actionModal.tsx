@@ -10,7 +10,8 @@ import {
   DialogRoot,
   DialogTitle,
 } from "@components/ui/dialog";
-import { ReactNode } from "react";
+import { ContextException } from "@lib/oops/contextException";
+import { createContext, ReactNode, RefObject, useContext, useRef } from "react";
 import { IconType } from "react-icons";
 
 interface ActionFormModalProps {
@@ -23,14 +24,21 @@ interface ActionFormModalProps {
   title: string;
 }
 
+const ActionModalPortalContext = createContext<
+  RefObject<HTMLDivElement | null> | undefined
+>(undefined);
+
 export function ActionFormModal({
   children,
+  formName,
   hideCancel,
   icon: IconProp,
   label,
   submitLabel,
   title,
 }: ActionFormModalProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
   return (
     <DialogRoot>
       <DialogBackdrop />
@@ -42,14 +50,20 @@ export function ActionFormModal({
           {label}
         </Button>
       </DialogTrigger>
-      <DialogContent as="form">
+      <DialogContent ref={ref}>
         <DialogCloseTrigger />
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <DialogBody>{children}</DialogBody>
+        <DialogBody>
+          <ActionModalPortalContext.Provider value={ref}>
+            {children}
+          </ActionModalPortalContext.Provider>
+        </DialogBody>
         <DialogFooter flexDirection={"row-reverse"} justifyContent={"end"}>
-          <Button type="submit">{submitLabel ?? "Submit"}</Button>
+          <Button form={formName} type="submit">
+            {submitLabel ?? "Submit"}
+          </Button>
           {!hideCancel && (
             <DialogActionTrigger asChild>
               <Button colorPalette={"red"} type="button" variant={"outline"}>
@@ -61,4 +75,14 @@ export function ActionFormModal({
       </DialogContent>
     </DialogRoot>
   );
+}
+
+export function useActionModalPortalRef(
+  optional?: boolean,
+): RefObject<HTMLDivElement> {
+  const value = useContext(ActionModalPortalContext);
+  if (value === undefined && !optional) {
+    throw new ContextException("ActionModalPortalContext");
+  }
+  return value as RefObject<HTMLDivElement>;
 }

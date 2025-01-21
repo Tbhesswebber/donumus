@@ -9,10 +9,14 @@ import {
 } from "@chakra-ui/react";
 import { BasePage } from "@components/layout/basePage";
 import { PageHeader } from "@components/layout/pageHeader";
+import { ActionFormModal } from "@components/layout/pageHeader/actionModal";
+import { ItemForm } from "@features/lists/itemForm";
 import { ListTable } from "@features/lists/listTable";
 import { assertAuth } from "@lib/auth/server/actions";
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { DisplayValue } from "@root/commons/types";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { FiPlus } from "react-icons/fi";
 
 export const Route = createFileRoute("/me/list")({
   beforeLoad: () => assertAuth(),
@@ -35,19 +39,55 @@ export const Route = createFileRoute("/me/list")({
       },
     ];
     const list1 = { gifts: gifts1, id: crypto.randomUUID(), name: "Tanner" };
-    const list2 = { gifts: gifts2, id: crypto.randomUUID(), name: "Tanner" };
+    const list2 = {
+      gifts: gifts2,
+      id: crypto.randomUUID(),
+      name: "Tanner and Tori",
+    };
 
     return { lists: [list1, list2] };
   },
 });
 
+const newItemFormName = "new-item";
+
 function RouteComponent() {
   const { lists } = Route.useLoaderData();
+  const router = useRouter();
   const [selection, setSelection] = useState<string[]>([]);
   const hasSelection = selection.length > 0;
 
+  const listOptions = useMemo(
+    () =>
+      lists.map(({ id, name }): DisplayValue => ({ label: name, value: id })),
+    [lists],
+  );
+
   return (
-    <BasePage subheader={<PageHeader title="My List"></PageHeader>}>
+    <BasePage
+      subheader={
+        <PageHeader
+          action={
+            <ActionFormModal
+              formName={newItemFormName}
+              icon={FiPlus}
+              label={"New Item"}
+              title="Create item"
+            >
+              <ItemForm
+                formName={newItemFormName}
+                handleSubmit={() => {
+                  router.load({ sync: false }).catch(console.log);
+                }}
+                item={{ listId: listOptions[0].value }}
+                listOptions={listOptions}
+              />
+            </ActionFormModal>
+          }
+          title="My List"
+        ></PageHeader>
+      }
+    >
       <Flex direction={"column"} gap={16} grow={1}>
         {lists.map((list) => (
           <ListTable

@@ -13,8 +13,13 @@ export const Field = React.forwardRef<HTMLDivElement, FieldProps>(
     const { children, errorText, helperText, label, optionalText, ...rest } =
       props;
 
+    const style = React.useMemo(
+      () => ({ "--field-label-width": "max-content", ...(rest.style ?? {}) }),
+      [rest.style],
+    );
+
     return (
-      <ChakraField.Root ref={ref} {...rest}>
+      <ChakraField.Root ref={ref} {...rest} style={style}>
         {label && (
           <ChakraField.Label>
             {label}
