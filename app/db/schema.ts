@@ -1,5 +1,7 @@
+import { MAX_STRING_LENGTH } from "@root/commons/constants";
 import { relations } from "drizzle-orm";
 import {
+  boolean,
   pgEnum,
   pgTable,
   timestamp,
@@ -104,3 +106,24 @@ export const persistenceUserToFamilyInsert =
   createInsertSchema(usersToFamiliesTable);
 export const persistenceUserToFamilySelect =
   createSelectSchema(usersToFamiliesTable);
+
+/*************************************
+ *
+ *     GIFTS
+ *
+ *************************************/
+
+export const giftTable = pgTable("gifts", {
+  created_at: timestamp().notNull(),
+  created_by: uuid().notNull(),
+  description: varchar({ length: MAX_STRING_LENGTH }).notNull(),
+  hidden: boolean(),
+  id: uuid().primaryKey().notNull(),
+  link: varchar({ length: MAX_STRING_LENGTH }),
+  list_id: uuid().notNull(),
+  starred: boolean(),
+  updated_at: timestamp().notNull(),
+});
+
+export const persistenceGiftInsert = createInsertSchema(giftTable);
+export const persistenceGiftSelect = createSelectSchema(giftTable);
