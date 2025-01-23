@@ -14,6 +14,17 @@ import { z } from "zod";
 
 /*************************************
  *
+ *     COMMONS
+ *
+ *************************************/
+
+const timestamps = {
+  created_at: timestamp().notNull(),
+  updated_at: timestamp().notNull(),
+};
+
+/*************************************
+ *
  *     ENUMS
  *
  *************************************/
@@ -33,11 +44,10 @@ export type PersistenceFamilyRoleEnum = z.infer<
 
 export const userTable = pgTable("users", {
   auth_id: varchar({ length: 255 }).notNull().unique(),
-  created_at: timestamp().notNull(),
   email: varchar({ length: 255 }).notNull().unique(),
   id: uuid().primaryKey().notNull().unique(),
   name: varchar({ length: 255 }),
-  updated_at: timestamp().notNull(),
+  ...timestamps,
 });
 
 export const userRelations = relations(userTable, ({ many }) => ({
@@ -54,10 +64,9 @@ export const persistenceUserSelect = createSelectSchema(userTable);
  *************************************/
 
 export const familyTable = pgTable("families", {
-  created_at: timestamp().notNull(),
   id: uuid().primaryKey().notNull(),
   name: varchar({ length: 255 }).notNull(),
-  updated_at: timestamp().notNull(),
+  ...timestamps,
 });
 
 export const familyRelations = relations(familyTable, ({ many }) => ({
@@ -76,13 +85,13 @@ export const persistenceFamilySelect = createSelectSchema(familyTable);
 export const usersToFamiliesTable = pgTable(
   "users_to_families",
   {
-    created_at: timestamp().notNull(),
     family_id: uuid()
       .notNull()
       .references(() => familyTable.id),
     id: uuid().primaryKey().notNull(),
     role: familyRoleEnum().notNull(),
-    updated_at: timestamp().notNull(),
+    ...timestamps,
+
     user_id: uuid().references(() => userTable.id),
   },
   (t) => [uniqueIndex("family_to_user_index").on(t.family_id, t.user_id)],
@@ -114,7 +123,6 @@ export const persistenceUserToFamilySelect =
  *************************************/
 
 export const giftTable = pgTable("gifts", {
-  created_at: timestamp().notNull(),
   created_by: uuid().notNull(),
   description: varchar({ length: MAX_STRING_LENGTH }).notNull(),
   hidden: boolean(),
@@ -122,7 +130,7 @@ export const giftTable = pgTable("gifts", {
   link: varchar({ length: MAX_STRING_LENGTH }),
   list_id: uuid().notNull(),
   starred: boolean(),
-  updated_at: timestamp().notNull(),
+  ...timestamps,
 });
 
 export const persistenceGiftInsert = createInsertSchema(giftTable);
