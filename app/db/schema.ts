@@ -52,10 +52,13 @@ export const userTable = pgTable("users", {
 
 export const userRelations = relations(userTable, ({ many }) => ({
   families: many(usersToFamiliesTable),
+  lists: many(listsToUsersTable),
 }));
 
 export const persistenceUserInsert = createInsertSchema(userTable);
+export type PersistenceUserInsert = z.infer<typeof persistenceUserInsert>;
 export const persistenceUserSelect = createSelectSchema(userTable);
+export type PersistenceUserSelect = z.infer<typeof persistenceUserSelect>;
 
 /*************************************
  *
@@ -74,7 +77,9 @@ export const familyRelations = relations(familyTable, ({ many }) => ({
 }));
 
 export const persistenceFamilyInsert = createInsertSchema(familyTable);
+export type PersistenceFamilyInsert = z.infer<typeof persistenceFamilyInsert>;
 export const persistenceFamilySelect = createSelectSchema(familyTable);
+export type PersistenceFamilySelect = z.infer<typeof persistenceFamilySelect>;
 
 /*************************************
  *
@@ -118,6 +123,67 @@ export const persistenceUserToFamilySelect =
 
 /*************************************
  *
+ *     LISTS
+ *
+ *************************************/
+
+export const listTable = pgTable("lists", {
+  id: uuid().primaryKey().notNull(),
+  last_change: timestamp().notNull(),
+  name: varchar({ length: MAX_STRING_LENGTH }).notNull(),
+  personal: boolean().notNull(),
+  ...timestamps,
+});
+
+export const listRelations = relations(listTable, ({ many }) => ({
+  users: many(listsToUsersTable),
+}));
+
+export const persistenceListInsert = createInsertSchema(listTable);
+export type PersistenceListInsert = z.infer<typeof persistenceListInsert>;
+export const persistenceListSelect = createSelectSchema(listTable);
+export type PersistenceListSelect = z.infer<typeof persistenceListSelect>;
+
+/*************************************
+ *
+ *     LISTS_TO_USERS
+ *
+ *************************************/
+
+export const listsToUsersTable = pgTable("lists_to_users", {
+  id: uuid().primaryKey().notNull(),
+  list_id: uuid().notNull(),
+  user_id: uuid().notNull(),
+  ...timestamps,
+});
+
+export const listsToUsersRelations = relations(
+  listsToUsersTable,
+  ({ one }) => ({
+    list: one(listTable, {
+      fields: [listsToUsersTable.list_id],
+      references: [listTable.id],
+    }),
+    user: one(userTable, {
+      fields: [listsToUsersTable.user_id],
+      references: [userTable.id],
+    }),
+  }),
+);
+
+export const persistenceListToUserInsert =
+  createInsertSchema(listsToUsersTable);
+export type PersistenceListToUserInsert = z.infer<
+  typeof persistenceListToUserInsert
+>;
+export const persistenceListToUserSelect =
+  createSelectSchema(listsToUsersTable);
+export type PersistenceListToUserSelect = z.infer<
+  typeof persistenceListToUserSelect
+>;
+
+/*************************************
+ *
  *     GIFTS
  *
  *************************************/
@@ -134,4 +200,6 @@ export const giftTable = pgTable("gifts", {
 });
 
 export const persistenceGiftInsert = createInsertSchema(giftTable);
+export type PersistenceGiftInsert = z.infer<typeof persistenceGiftInsert>;
 export const persistenceGiftSelect = createSelectSchema(giftTable);
+export type PersistenceGiftSelect = z.infer<typeof persistenceGiftSelect>;

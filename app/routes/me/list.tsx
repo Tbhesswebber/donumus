@@ -14,6 +14,8 @@ import { ItemForm } from "@features/lists/itemForm";
 import { ListTable } from "@features/lists/listTable";
 import { assertAuth } from "@lib/auth/server/actions";
 import { DisplayValue } from "@root/commons/types";
+import { getListsForUser } from "@services/list";
+import { getUserByAuthId } from "@services/user";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { FiPlus } from "react-icons/fi";
@@ -21,31 +23,11 @@ import { FiPlus } from "react-icons/fi";
 export const Route = createFileRoute("/me/list")({
   beforeLoad: () => assertAuth(),
   component: RouteComponent,
-  loader() {
-    const gifts1 = [
-      {
-        description: "foo bar baz",
-        id: crypto.randomUUID(),
-        name: "foo",
-        status: "available",
-      },
-    ];
-    const gifts2 = [
-      {
-        description: "foo bar baz",
-        id: crypto.randomUUID(),
-        name: "foo",
-        status: "available",
-      },
-    ];
-    const list1 = { gifts: gifts1, id: crypto.randomUUID(), name: "Tanner" };
-    const list2 = {
-      gifts: gifts2,
-      id: crypto.randomUUID(),
-      name: "Tanner and Tori",
-    };
+  loader: async ({ context }) => {
+    const { id } = await getUserByAuthId({ data: context.userId });
+    const lists = await getListsForUser({ data: id });
 
-    return { lists: [list1, list2] };
+    return { lists };
   },
 });
 
@@ -91,7 +73,7 @@ function RouteComponent() {
       <Flex direction={"column"} gap={16} grow={1}>
         {lists.map((list) => (
           <ListTable
-            gifts={list.gifts}
+            gifts={[]}
             handleGiftSelect={(gift, checked) => {
               setSelection((prev) =>
                 checked
