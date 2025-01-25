@@ -14,28 +14,44 @@ import { ItemForm } from "@features/lists/itemForm";
 import { ListTable } from "@features/lists/listTable";
 import { assertAuth } from "@lib/auth/server/actions";
 import { DisplayValue } from "@root/commons/types";
-import { getListsForUser } from "@services/list";
+import { gift } from "@services/gift/types";
+import { getHydratedListsForUser } from "@services/list";
 import { getUserByAuthId } from "@services/user";
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { FiPlus } from "react-icons/fi";
+import { z } from "zod";
+
+export const pageParams = z
+  .object({
+    modal: z.boolean().optional(),
+  })
+  .merge(gift.partial());
+export type PageParams = z.infer<typeof pageParams>;
 
 export const Route = createFileRoute("/me/list")({
+  /* eslint-disable perfectionist/sort-objects -- For typescript to help us with file routes, these need to be in a specific order */
+  validateSearch: (params: PageParams): PageParams => {
+    const { data } = pageParams.safeParse(params);
+    return data?.modal ? data : {};
+  },
   beforeLoad: () => assertAuth(),
   component: RouteComponent,
   loader: async ({ context }) => {
     const { id } = await getUserByAuthId({ data: context.userId });
-    const lists = await getListsForUser({ data: id });
+    const lists = await getHydratedListsForUser({ data: id });
 
     return { lists };
   },
+  /* eslint-enable perfectionist/sort-objects */
 });
 
 const newItemFormName = "new-item";
 
 function RouteComponent() {
-  const { lists } = Route.useLoaderData();
   const router = useRouter();
+  const { lists } = Route.useLoaderData();
+  const { modal, ...gift } = Route.useSearch();
   const [selection, setSelection] = useState<string[]>([]);
   const hasSelection = selection.length > 0;
 
@@ -43,6 +59,13 @@ function RouteComponent() {
     () =>
       lists.map(({ id, name }): DisplayValue => ({ label: name, value: id })),
     [lists],
+  );
+  const defaultFormItem = useMemo(
+    () => ({
+      listId: listOptions[0].value,
+      ...gift,
+    }),
+    [gift, listOptions],
   );
 
   return (
@@ -52,16 +75,18 @@ function RouteComponent() {
           action={
             <ActionFormModal
               formName={newItemFormName}
+              handleClose={() => router.navigate({ search: {}, to: "." })}
               icon={FiPlus}
               label={"New Item"}
-              title="Create item"
+              open={!!modal}
+              title={gift.id ? "Update item" : "Create item"}
             >
               <ItemForm
                 formName={newItemFormName}
                 handleSubmit={() => {
                   router.load({ sync: false }).catch(console.log);
                 }}
-                item={{ listId: listOptions[0].value }}
+                item={defaultFormItem}
                 listOptions={listOptions}
               />
             </ActionFormModal>
@@ -73,7 +98,13 @@ function RouteComponent() {
       <Flex direction={"column"} gap={16} grow={1}>
         {lists.map((list) => (
           <ListTable
-            gifts={[]}
+            gifts={list.gifts}
+            handleGiftEdit={(gift) => {
+              return router.navigate({
+                search: { modal: true, ...gift },
+                to: "/me/list",
+              });
+            }}
             handleGiftSelect={(gift, checked) => {
               setSelection((prev) =>
                 checked

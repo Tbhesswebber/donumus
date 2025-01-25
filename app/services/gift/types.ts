@@ -11,10 +11,8 @@ export const giftCreation = z.object({
 });
 export type GiftCreation = z.infer<typeof giftCreation>;
 
-export const gift = z
-  .object({
-    addedBy: uuid,
-  })
-  .merge(timeTracked)
-  .merge(giftCreation);
+export const gift = giftCreation.merge(timeTracked).extend({
+  addedBy: uuid,
+  id: uuid,
+});
 export type Gift = z.infer<typeof gift>;

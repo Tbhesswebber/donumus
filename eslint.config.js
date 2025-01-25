@@ -36,9 +36,30 @@ export default [
     },
     rules: {
       ...drizzlePlugin.configs.recommended.rules,
+      "@typescript-eslint/no-confusing-void-expression": [
+        "error",
+        {
+          ignoreArrowShorthand: true,
+          ignoreVoidOperator: true,
+          ignoreVoidReturningFunctions: true,
+        },
+      ],
       "@typescript-eslint/no-empty-object-type": [
         "error",
         { allowWithName: "Props$" },
+      ],
+      "@typescript-eslint/no-misused-promises": [
+        "error",
+        {
+          checksVoidReturn: {
+            arguments: false,
+            attributes: false,
+          },
+        },
+      ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { ignoreRestSiblings: true },
       ],
       "@typescript-eslint/only-throw-error": [
         "error",

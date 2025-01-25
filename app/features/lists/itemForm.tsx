@@ -106,6 +106,7 @@ export function ItemForm({
         ></Input>
       </Field>
       <Field
+        disabled={listOptions.items.length === 0}
         errorText={errors.listId?.map(({ message }) => message).join("\n")}
         invalid={!!errors.listId}
         label={"What list would you like to add it to?"}
@@ -130,6 +131,13 @@ export function ItemForm({
             ))}
           </SelectContent>
         </SelectRoot>
+      </Field>
+      <Field label={"Link"}>
+        <Input
+          name="link"
+          onChange={onAnyInputChange}
+          value={gift.link}
+        ></Input>
       </Field>
       <Field
         disabled

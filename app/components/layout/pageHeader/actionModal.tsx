@@ -17,9 +17,11 @@ import { IconType } from "react-icons";
 interface ActionFormModalProps {
   children: ReactNode;
   formName: string;
+  handleClose?: () => void;
   hideCancel?: boolean;
   icon: IconType;
   label: string;
+  open?: boolean;
   submitLabel?: string;
   title: string;
 }
@@ -31,16 +33,24 @@ const ActionModalPortalContext = createContext<
 export function ActionFormModal({
   children,
   formName,
+  handleClose,
   hideCancel,
   icon: IconProp,
   label,
+  open,
   submitLabel,
   title,
 }: ActionFormModalProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <DialogRoot>
+    <DialogRoot
+      onOpenChange={({ open }) => {
+        if (!open && handleClose) handleClose();
+      }}
+      open={open}
+      restoreFocus
+    >
       <DialogBackdrop />
       <DialogTrigger asChild>
         <Button variant={"subtle"}>
