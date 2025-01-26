@@ -25,6 +25,12 @@ export const Route = createRootRoute({
       title="Unknown Error"
     />
   ),
+  head: () => ({
+    links: [
+      { href: "/favicon.svg", rel: "shortcut icon", type: "image/svg+xml" },
+    ],
+    meta: [{ title: "donum(us) - beta" }],
+  }),
   // @ts-expect-error -- @see https://github.com/TanStack/router/issues/1992#issuecomment-2397896356
   scripts: () =>
     import.meta.env.DEV
