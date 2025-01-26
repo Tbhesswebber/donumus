@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as FamiliesIndexImport } from './routes/families/index'
 import { Route as SignInSplatImport } from './routes/sign-in/$'
+import { Route as MeListImport } from './routes/me/list'
 import { Route as FamiliesNewImport } from './routes/families/new'
 import { Route as FamiliesIdImport } from './routes/families/$id'
 
@@ -34,6 +35,12 @@ const FamiliesIndexRoute = FamiliesIndexImport.update({
 const SignInSplatRoute = SignInSplatImport.update({
   id: '/sign-in/$',
   path: '/sign-in/$',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MeListRoute = MeListImport.update({
+  id: '/me/list',
+  path: '/me/list',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,6 +81,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FamiliesNewImport
       parentRoute: typeof rootRoute
     }
+    '/me/list': {
+      id: '/me/list'
+      path: '/me/list'
+      fullPath: '/me/list'
+      preLoaderRoute: typeof MeListImport
+      parentRoute: typeof rootRoute
+    }
     '/sign-in/$': {
       id: '/sign-in/$'
       path: '/sign-in/$'
@@ -97,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/families/$id': typeof FamiliesIdRoute
   '/families/new': typeof FamiliesNewRoute
+  '/me/list': typeof MeListRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/families': typeof FamiliesIndexRoute
 }
@@ -105,6 +120,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/families/$id': typeof FamiliesIdRoute
   '/families/new': typeof FamiliesNewRoute
+  '/me/list': typeof MeListRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/families': typeof FamiliesIndexRoute
 }
@@ -114,6 +130,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/families/$id': typeof FamiliesIdRoute
   '/families/new': typeof FamiliesNewRoute
+  '/me/list': typeof MeListRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/families/': typeof FamiliesIndexRoute
 }
@@ -124,15 +141,23 @@ export interface FileRouteTypes {
     | '/'
     | '/families/$id'
     | '/families/new'
+    | '/me/list'
     | '/sign-in/$'
     | '/families'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/families/$id' | '/families/new' | '/sign-in/$' | '/families'
+  to:
+    | '/'
+    | '/families/$id'
+    | '/families/new'
+    | '/me/list'
+    | '/sign-in/$'
+    | '/families'
   id:
     | '__root__'
     | '/'
     | '/families/$id'
     | '/families/new'
+    | '/me/list'
     | '/sign-in/$'
     | '/families/'
   fileRoutesById: FileRoutesById
@@ -142,6 +167,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FamiliesIdRoute: typeof FamiliesIdRoute
   FamiliesNewRoute: typeof FamiliesNewRoute
+  MeListRoute: typeof MeListRoute
   SignInSplatRoute: typeof SignInSplatRoute
   FamiliesIndexRoute: typeof FamiliesIndexRoute
 }
@@ -150,6 +176,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FamiliesIdRoute: FamiliesIdRoute,
   FamiliesNewRoute: FamiliesNewRoute,
+  MeListRoute: MeListRoute,
   SignInSplatRoute: SignInSplatRoute,
   FamiliesIndexRoute: FamiliesIndexRoute,
 }
@@ -167,6 +194,7 @@ export const routeTree = rootRoute
         "/",
         "/families/$id",
         "/families/new",
+        "/me/list",
         "/sign-in/$",
         "/families/"
       ]
@@ -179,6 +207,9 @@ export const routeTree = rootRoute
     },
     "/families/new": {
       "filePath": "families/new.tsx"
+    },
+    "/me/list": {
+      "filePath": "me/list.tsx"
     },
     "/sign-in/$": {
       "filePath": "sign-in/$.tsx"

@@ -3,7 +3,7 @@
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "module": "ESNext",
-    "target": "ES2022",
+    "target": "ESNext",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "paths": {
@@ -11,7 +11,8 @@
       "@components/*": ["./app/components/*"],
       "@features/*": ["./app/features/*"],
       "@services/*": ["./app/services/*"],
-      "@db/*": ["./app/db/*"]
+      "@db/*": ["./app/db/*"],
+      "@root/*": ["./app/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

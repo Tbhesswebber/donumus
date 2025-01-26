@@ -1,3 +1,4 @@
+import { ListService } from "@services/list/service";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
@@ -9,6 +10,8 @@ import {
 } from "../../db/schema";
 
 export class UserService {
+  constructor(private listService = new ListService()) {}
+
   async createUser({
     authId,
     email,
@@ -20,7 +23,7 @@ export class UserService {
     name?: string;
     userId: string;
   }) {
-    const user = persistenceUserInsert.parse({
+    const persistenceUser = persistenceUserInsert.parse({
       auth_id: authId,
       created_at: new Date(),
       email,
@@ -28,7 +31,11 @@ export class UserService {
       name,
       updated_at: new Date(new Date().toISOString()),
     });
-    return db.insert(userTable).values(user);
+    const user = await db.insert(userTable).values(persistenceUser).returning();
+    await this.listService.createListForUser(userId, {
+      name: user[0].name ?? user[0].email,
+      personal: true,
+    });
   }
 
   async getUserByAuthId(authId: string) {

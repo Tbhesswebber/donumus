@@ -13,6 +13,10 @@ declare namespace NodeJS {
   }
 }
 
+type PickByValue<TObject, TValue> = {
+  [K in keyof TObject as TObject[K] extends TValue ? K : never]: TObject[K];
+};
+
 interface Response {
   json(): Promise<unknown>;
 }
