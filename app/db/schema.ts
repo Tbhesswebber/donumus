@@ -36,6 +36,15 @@ export type PersistenceFamilyRoleEnum = z.infer<
   typeof persistenceFamilyRoleEnum
 >;
 
+export const statusEnum = pgEnum("gift_status", [
+  "gone",
+  "partially_gone",
+  "looking",
+  "available",
+]);
+export const persistenceStatusEnum = createSelectSchema(statusEnum);
+export type PersistenceStatusEnum = z.infer<typeof persistenceStatusEnum>;
+
 /*************************************
  *
  *     USERS
@@ -203,3 +212,23 @@ export const persistenceGiftInsert = createInsertSchema(giftTable);
 export type PersistenceGiftInsert = z.infer<typeof persistenceGiftInsert>;
 export const persistenceGiftSelect = createSelectSchema(giftTable);
 export type PersistenceGiftSelect = z.infer<typeof persistenceGiftSelect>;
+
+/*************************************
+ *
+ *     STATUS
+ *
+ *************************************/
+
+export const statusTable = pgTable("statuses", {
+  created_by: uuid().notNull(),
+  gift_id: uuid().notNull(),
+  id: uuid().primaryKey().notNull(),
+  note: varchar({ length: MAX_STRING_LENGTH }),
+  status: statusEnum().notNull(),
+  ...timestamps,
+});
+
+export const persistenceStatusInsert = createInsertSchema(statusTable);
+export type PersistenceStatusInsert = z.infer<typeof persistenceStatusInsert>;
+export const persistenceStatusUpdate = createSelectSchema(statusTable);
+export type PersistenceStatusUpdate = z.infer<typeof persistenceStatusUpdate>;

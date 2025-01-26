@@ -29,6 +29,9 @@ function getBestUnit(source: Date, target: Date): RelativeTimeUnit {
   const elapsed = target.getTime() - source.getTime();
 
   for (const [unit, ms] of Object.entries(unitMap)) {
+    if (unit === "day" && elapsed < unitMap.day) {
+      return "hour";
+    }
     if (Math.abs(elapsed) > ms / 2) {
       return unit as RelativeTimeUnit; // casting because Object.entries types are wrong
     }

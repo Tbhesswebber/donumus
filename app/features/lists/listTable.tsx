@@ -11,18 +11,25 @@ import { Checkbox } from "@components/ui/checkbox";
 import { formatTimeRelative } from "@lib/fmt/date";
 import { deleteGift } from "@services/gift";
 import { Gift } from "@services/gift/types";
+import { Status } from "@services/status/types";
 import { useRouter } from "@tanstack/react-router";
 import { FiEdit3 as FiEdit, FiTrash } from "react-icons/fi";
 
+import { GiftWithStatus } from "./types";
+
 interface ListTableProps {
-  gifts: Gift[];
+  gifts: GiftWithStatus[];
   handleGiftEdit: (gift: Gift) => Promise<void> | void;
   handleGiftSelect: (gift: Gift, checked: boolean) => void;
   name: string;
   selectedGifts: string[];
 }
 
-const columns: (TableCellProps & { column: keyof Gift; label: string })[] = [
+const columns: (TableCellProps & {
+  column: keyof GiftWithStatus;
+  label: string;
+})[] = [
+  { column: "statuses", htmlWidth: "21ch", label: "Status" },
   { column: "description", label: "Description" },
   {
     column: "updatedAt",
@@ -77,7 +84,6 @@ export function ListTable({
                   ) {
                     return null;
                   }
-                  console.dir(e.target);
                   handleGiftSelect(gift, !selected);
                 }}
               >
@@ -156,8 +162,28 @@ export function ListTable({
   );
 }
 
-function renderValue(value: Gift[keyof Gift]) {
+const statusToLabelMap: Record<Status["status"], string> = {
+  available: "",
+  gone: "Gone",
+  looking: "Looking",
+  partially_gone: "Partial",
+};
+
+function renderValue(value: GiftWithStatus[keyof GiftWithStatus]) {
   if (!value || typeof value === "boolean") return null;
   if (typeof value === "string") return value;
   if (value instanceof Date) return formatTimeRelative(value);
+  if (Array.isArray(value)) {
+    const mostRecentStatus = value.reduce<[number, null | Status]>(
+      ([maxDate, maxValue], current) => {
+        if (maxDate < current.createdAt.getTime()) {
+          return [current.createdAt.getTime(), current];
+        }
+        return [maxDate, maxValue];
+      },
+      [0, null],
+    )[1];
+
+    return mostRecentStatus ? statusToLabelMap[mostRecentStatus.status] : "";
+  }
 }

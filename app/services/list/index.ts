@@ -1,3 +1,4 @@
+import { ListWithGifts } from "@features/lists/types";
 import { authMiddleware } from "@lib/auth/server/middleware";
 import { uuid } from "@services/common/types";
 import { GiftService } from "@services/gift/service";
@@ -16,7 +17,7 @@ export const getListsForUser = createServerFn({ method: "GET" })
 export const getHydratedListsForUser = createServerFn({ method: "GET" })
   .middleware([authMiddleware])
   .validator((userId: string) => uuid.parse(userId))
-  .handler(async ({ data: userId }) => {
+  .handler(async ({ data: userId }): Promise<ListWithGifts[]> => {
     const listService = new ListService();
     const giftService = new GiftService();
 

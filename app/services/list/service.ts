@@ -47,7 +47,7 @@ export class ListService {
     return persistedList.at(0);
   }
 
-  async getListsForUser(userId: Uuid) {
+  async getListsForUser(userId: Uuid): Promise<List[]> {
     const parsedUserId = uuid.parse(userId);
     const results = await db
       .select()
